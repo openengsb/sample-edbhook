@@ -21,8 +21,8 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd" >
 
-  <service id="precommitHook"  interface="org.openengsb.core.api.edb.EDBHook">
-    <bean class="org.openengsb.framework.edb.preCommitHook.internal.PreCommitHook">
+  <service id="collisionHook"  interface="org.openengsb.core.api.edb.EDBCollisionHook">
+    <bean class="org.openengsb.framework.edb.collisionHook.internal.CollisionHook">
       <property name="searcher" ref="searcher" />
     </bean>
   </service>
