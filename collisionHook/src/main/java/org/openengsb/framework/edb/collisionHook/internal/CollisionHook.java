@@ -15,4 +15,8 @@ public class CollisionHook implements EDBCollisionHook {
     public List<ArrayList<String>> findCollisions(List<EDBObject> samples) {
         return searcher.findCollisions(samples);
     }
+
+    public void setSearcher(Searcher searcher) {
+        this.searcher = searcher;
+    }
 }

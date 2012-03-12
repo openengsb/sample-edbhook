@@ -14,4 +14,9 @@ public class UpdateHook implements EDBUpdateHook {
     public void update(List<EDBObject> inserts, List<EDBObject> updates, List<EDBObject> deletes) {
         indexer.updateIndex(inserts, updates, deletes);
     }
+
+    public void setIndexer(Indexer indexer) {
+        this.indexer = indexer;
+    }
+
 }

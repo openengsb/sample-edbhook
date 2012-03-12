@@ -28,6 +28,6 @@
   </service>
   
   <reference id="searcher" interface="org.openengsb.similarity.Searcher" 
-  filter="(searcher.id=PLCCombined)"/>
+  filter="(searcher=PLCCombined)"/>
 
 </blueprint>
