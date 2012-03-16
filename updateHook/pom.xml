@@ -124,7 +124,7 @@
     <dependency>
       <groupId>org.openengsb.similarity</groupId>
       <artifactId>org.openengsb.similarity</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+      <version>1.0.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>    
   </dependencies>

@@ -23,11 +23,11 @@
 
   <service id="updateHook"  interface="org.openengsb.core.api.edb.EDBUpdateHook">
     <bean class="org.openengsb.framework.edb.updateHook.internal.UpdateHook">
-      <property name="indexer" ref="indexer" />
+      <property name="index" ref="index" />
     </bean>
   </service>
   
-  <reference id="indexer" interface="org.openengsb.similarity.Indexer" 
+  <reference id="index" interface="org.openengsb.similarity.Index" 
   filter="(indexer=PLCCombined)"/>
 
 </blueprint>

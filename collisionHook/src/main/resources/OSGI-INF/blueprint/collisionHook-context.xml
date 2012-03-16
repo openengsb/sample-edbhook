@@ -23,11 +23,11 @@
 
   <service id="collisionHook"  interface="org.openengsb.core.api.edb.EDBCollisionHook">
     <bean class="org.openengsb.framework.edb.collisionHook.internal.CollisionHook">
-      <property name="searcher" ref="searcher" />
+      <property name="index" ref="index" />
     </bean>
   </service>
   
-  <reference id="searcher" interface="org.openengsb.similarity.Searcher" 
+  <reference id="index" interface="org.openengsb.similarity.Index" 
   filter="(searcher=PLCCombined)"/>
 
 </blueprint>

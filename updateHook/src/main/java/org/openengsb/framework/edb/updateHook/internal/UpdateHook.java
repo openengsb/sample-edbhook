@@ -4,19 +4,19 @@ import java.util.List;
 
 import org.openengsb.core.api.edb.EDBObject;
 import org.openengsb.core.api.edb.EDBUpdateHook;
-import org.openengsb.similarity.Indexer;
+import org.openengsb.similarity.Index;
 
 public class UpdateHook implements EDBUpdateHook {
 
-    private Indexer indexer;
+    private Index index;
 
     @Override
     public void update(List<EDBObject> inserts, List<EDBObject> updates, List<EDBObject> deletes) {
-        indexer.updateIndex(inserts, updates, deletes);
+        index.updateIndex(inserts, updates, deletes);
     }
 
-    public void setIndexer(Indexer indexer) {
-        this.indexer = indexer;
+    public void setIndex(Index index) {
+        this.index = index;
     }
 
 }
