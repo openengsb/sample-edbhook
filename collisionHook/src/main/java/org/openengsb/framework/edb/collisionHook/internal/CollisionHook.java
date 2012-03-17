@@ -1,6 +1,5 @@
 package org.openengsb.framework.edb.collisionHook.internal;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openengsb.core.api.edb.EDBCollisionHook;
@@ -12,7 +11,7 @@ public class CollisionHook implements EDBCollisionHook {
     private Index index;
 
     @Override
-    public List<ArrayList<String>> findCollisions(List<EDBObject> samples) {
+    public List<List<String>> findCollisions(List<EDBObject> samples) {
         return index.findCollisions(samples);
     }
 
