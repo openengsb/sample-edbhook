@@ -8,11 +8,13 @@ import org.openengsb.similarity.Index;
 
 public class UpdateTrigger implements EDBUpdateTrigger {
 
-    private Index index = null;
+    private Index standard = null;
+    private Index complex = null;
 
     public UpdateTrigger() {
         try {
-            index = new StandardIndex();
+            standard = new StandardIndex();
+            complex = new ComplexIndex();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -20,7 +22,8 @@ public class UpdateTrigger implements EDBUpdateTrigger {
 
     @Override
     public void update(EDBCommit commit) {
-        index.updateIndex(commit);
+        standard.updateIndex(commit);
+        complex.updateIndex(commit);
     }
 
 }
