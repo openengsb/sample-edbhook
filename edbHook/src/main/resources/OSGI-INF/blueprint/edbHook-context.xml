@@ -21,8 +21,8 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd" >
 
-  <service id="edbListener"  interface="org.openengsb.core.api.edb.EDBListener">
-    <bean class="org.openengsb.framework.edb.edbListener.internal.EDBListenerImpl" />
+  <service id="edbHook"  interface="org.openengsb.core.api.edb.EDBHook">
+    <bean class="org.openengsb.framework.edb.edbHook.internal.EDBHookImpl" />
   </service>
 
 </blueprint>

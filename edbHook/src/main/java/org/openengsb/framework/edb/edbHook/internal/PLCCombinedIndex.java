@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.openengsb.framework.edb.edbListener.internal;
+package org.openengsb.framework.edb.edbHook.internal;
 
 import java.io.IOException;
 

@@ -29,16 +29,16 @@
   </parent>
 
   <properties>
-    <bundle.symbolicName>org.openengsb.framework.edb.edbListener</bundle.symbolicName>
-    <bundle.namespace>org.openengsb.framework.edb.edbListener</bundle.namespace>
-    <domain.name>edbListener</domain.name>
+    <bundle.symbolicName>org.openengsb.framework.edb.edbHook</bundle.symbolicName>
+    <bundle.namespace>org.openengsb.framework.edb.edbHook</bundle.namespace>
+    <domain.name>edbHook</domain.name>
   </properties>
 
-  <groupId>org.openengsb.framework.edb.edbListener</groupId>
-  <artifactId>org.openengsb.framework.edb.edbListener</artifactId>
+  <groupId>org.openengsb.framework.edb.edbHook</groupId>
+  <artifactId>org.openengsb.framework.edb.edbHook</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 
-  <name>OpenEngSB :: EDB :: EDBListener</name>
+  <name>OpenEngSB :: EDB :: EDBHook</name>
 
   <packaging>bundle</packaging>
 
@@ -58,7 +58,7 @@
         <filtering>true</filtering>
         <includes>
           <include>**/*.info</include>
-          <include>OSGI-INF/blueprint/edbListener-context.xml</include>
+          <include>OSGI-INF/blueprint/edbHook-context.xml</include>
         </includes>
       </resource>
     </resources>

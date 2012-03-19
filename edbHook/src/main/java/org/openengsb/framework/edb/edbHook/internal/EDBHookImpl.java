@@ -1,19 +1,19 @@
-package org.openengsb.framework.edb.edbListener.internal;
+package org.openengsb.framework.edb.edbHook.internal;
 
 import java.io.IOException;
 import java.util.List;
 
 import org.openengsb.core.api.edb.EDBCommit;
-import org.openengsb.core.api.edb.EDBListener;
+import org.openengsb.core.api.edb.EDBHook;
 import org.openengsb.core.api.edb.EDBObject;
 import org.openengsb.similarity.Index;
 
-public class EDBListenerImpl implements EDBListener {
+public class EDBHookImpl implements EDBHook {
 
     private Index plcfunction = null;
     private Index plccombined = null;
 
-    public EDBListenerImpl() {
+    public EDBHookImpl() {
         try {
             plcfunction = new PLCFunctionTextOneIndex();
             plccombined = new PLCCombinedIndex();
