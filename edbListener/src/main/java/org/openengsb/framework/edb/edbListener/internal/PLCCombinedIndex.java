@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-package org.openengsb.framework.edb.updateTrigger.internal;
+package org.openengsb.framework.edb.edbListener.internal;
 
 import java.io.IOException;
-import java.util.Map;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -26,38 +25,33 @@ import org.apache.lucene.index.Term;
 import org.openengsb.core.api.edb.EDBObject;
 import org.openengsb.similarity.internal.AbstractIndex;
 
-/**
- * 
- * This class represents possible index-configurations
- * 
- */
-public class ComplexIndex extends AbstractIndex {
+public class PLCCombinedIndex extends AbstractIndex {
 
-    public ComplexIndex() throws IOException {
-        super("data/similarity/complex");
+    public PLCCombinedIndex() throws IOException {
+        super("data/similarity/plccombined");
     }
 
     @Override
     protected void addDocument(EDBObject content) throws IOException {
         Document doc = new Document();
 
-        for (Map.Entry<String, Object> entry : content.entrySet()) {
-            doc.add(new Field(entry.getKey().toString(), entry.getValue().toString(), Field.Store.YES,
-                Field.Index.NOT_ANALYZED));
-        }
-
-        doc.add(new Field("complexKey", content.get("key1").toString() + "#" + content.get("key2").toString()
-                + "#" + content.get("key3").toString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+        doc.add(new Field("combinedkey",
+            content.get("region").toString() + "" + content.get("kks0").toString() + ""
+                    + content.get("kks1").toString() + "" + content.get("kks2").toString() + ""
+                    + content.get("kks3").toString(),
+            Field.Store.YES, Field.Index.NOT_ANALYZED));
 
         this.writer.updateDocument(new Term("oid", content.getOID()), doc);
+
     }
 
     @Override
     protected String buildQueryString(EDBObject sample) {
-
         String result =
-            "complexKey:" + sample.getString("key1") + "#" + sample.getString("key2") + "#" + sample.getString("key3");
+            "combinedkey:" + sample.getString("region") + "" + sample.getString("kks0") + ""
+                    + sample.getString("kks1") + "" + sample.getString("kks2") + "" + sample.getString("kks3");
 
         return result;
     }
+
 }
