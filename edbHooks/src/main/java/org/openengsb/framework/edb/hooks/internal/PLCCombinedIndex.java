@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.openengsb.framework.edb.edbHook.internal;
+package org.openengsb.framework.edb.hooks.internal;
 
 import java.io.IOException;
 
@@ -25,18 +25,21 @@ import org.apache.lucene.index.Term;
 import org.openengsb.core.api.edb.EDBObject;
 import org.openengsb.similarity.AbstractIndex;
 
-public class PLCFunctionTextOneIndex extends AbstractIndex {
+public class PLCCombinedIndex extends AbstractIndex {
 
-    public PLCFunctionTextOneIndex() throws IOException {
-        super("data/similarity/PLcFunctionTextOne");
+    public PLCCombinedIndex() throws IOException {
+        super("data/similarity/plccombined");
     }
 
     @Override
     protected void addDocument(EDBObject content) throws IOException {
         Document doc = new Document();
 
-        doc.add(new Field("functiontextone", content.get("functiontextone").toString(), Field.Store.YES,
-            Field.Index.NOT_ANALYZED));
+        doc.add(new Field("combinedkey",
+            content.get("region").toString() + "" + content.get("kks0").toString() + ""
+                    + content.get("kks1").toString() + "" + content.get("kks2").toString() + ""
+                    + content.get("kks3").toString(),
+            Field.Store.YES, Field.Index.NOT_ANALYZED));
 
         this.writer.updateDocument(new Term("oid", content.getOID()), doc);
 
@@ -44,7 +47,11 @@ public class PLCFunctionTextOneIndex extends AbstractIndex {
 
     @Override
     protected String buildQueryString(EDBObject sample) {
-        return "functiontextone:" + sample.getString("functiontextone") + "~0.8";
+        String result =
+            "combinedkey:" + sample.getString("region") + "" + sample.getString("kks0") + ""
+                    + sample.getString("kks1") + "" + sample.getString("kks2") + "" + sample.getString("kks3");
+
+        return result;
     }
 
 }

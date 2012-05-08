@@ -21,8 +21,16 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd" >
 
-  <service id="edbHook"  interface="org.openengsb.core.api.edb.EDBHook">
-    <bean class="org.openengsb.framework.edb.edbHook.internal.EDBHookImpl" />
+  <service id="edbPostCommitHook"  interface="org.openengsb.core.api.edb.hooks.EDBPostCommitHook">
+    <bean class="org.openengsb.framework.edb.hooks.internal.EDBPostCommitHookImpl" />
+  </service>
+
+  <service id="edbPreCommitHook"  interface="org.openengsb.core.api.edb.hooks.EDBPreCommitHook">
+    <bean class="org.openengsb.framework.edb.hooks.internal.EDBPreCommitHookImpl" />
+  </service>
+
+  <service id="errorHook"  interface="org.openengsb.core.api.edb.hooks.EDBErrorHook">
+    <bean class="org.openengsb.framework.edb.hooks.internal.EDBErrorHookImpl" />
   </service>
 
 </blueprint>
