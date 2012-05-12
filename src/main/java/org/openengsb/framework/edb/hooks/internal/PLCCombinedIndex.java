@@ -34,24 +34,29 @@ public class PLCCombinedIndex extends AbstractIndex {
     @Override
     protected void addDocument(EDBObject content) throws IOException {
         Document doc = new Document();
-
-        doc.add(new Field("combinedkey",
-            content.get("region").toString() + "" + content.get("kks0").toString() + ""
-                    + content.get("kks1").toString() + "" + content.get("kks2").toString() + ""
-                    + content.get("kks3").toString(),
-            Field.Store.YES, Field.Index.NOT_ANALYZED));
-
+        doc.add(new Field("combinedkey", buildDocumentStructure(content), Field.Store.YES, Field.Index.NOT_ANALYZED));
         this.writer.updateDocument(new Term("oid", content.getOID()), doc);
+    }
 
+    private String buildDocumentStructure(EDBObject content) {
+        StringBuilder document = new StringBuilder();
+        document.append(content.get("region").toString());
+        document.append(content.get("kks0").toString());
+        document.append(content.get("kks1").toString());
+        document.append(content.get("kks2").toString());
+        document.append(content.get("kks3").toString());
+        return document.toString();
     }
 
     @Override
     protected String buildQueryString(EDBObject sample) {
-        String result =
-            "combinedkey:" + sample.getString("region") + "" + sample.getString("kks0") + ""
-                    + sample.getString("kks1") + "" + sample.getString("kks2") + "" + sample.getString("kks3");
-
-        return result;
+        StringBuilder queryString = new StringBuilder();
+        queryString.append("combinedkey:");
+        queryString.append(sample.getString("region"));
+        queryString.append(sample.getString("kks0"));
+        queryString.append(sample.getString("kks1"));
+        queryString.append(sample.getString("kks2"));
+        queryString.append(sample.getString("kks3"));
+        return queryString.toString();
     }
-
 }

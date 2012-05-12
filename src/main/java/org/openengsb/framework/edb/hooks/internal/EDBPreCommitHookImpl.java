@@ -3,6 +3,7 @@ package org.openengsb.framework.edb.hooks.internal;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openengsb.core.api.edb.EDBCommit;
 import org.openengsb.core.api.edb.EDBException;
 import org.openengsb.core.api.edb.EDBObject;
@@ -13,13 +14,15 @@ public class EDBPreCommitHookImpl implements EDBPreCommitHook {
 
     private Index plcfunction = null;
     private Index plccombined = null;
+    private static final Logger LOGGER = Logger.getLogger(EDBPreCommitHookImpl.class);
 
     public EDBPreCommitHookImpl() {
         try {
             plcfunction = new PLCFunctionTextOneIndex();
             plccombined = new PLCCombinedIndex();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("could not create indices for EDBPostCommitHook");
+            LOGGER.debug(e.getStackTrace());
         }
     }
 
@@ -28,38 +31,41 @@ public class EDBPreCommitHookImpl implements EDBPreCommitHook {
      */
     @Override
     public void onPreCommit(EDBCommit commit) throws EDBException {
-        String exceptionmessage = "";
+        StringBuilder exceptionmessage = new StringBuilder();
         Boolean faulty = false;
 
         List<EDBObject> inserts = commit.getInserts();
 
         List<List<String>> insert1Analyzed = plcfunction.findCollisions(inserts);
-        exceptionmessage += "The plc-function-index found following problems: \n";
-        createErrorMessage(exceptionmessage, inserts, insert1Analyzed, faulty);
+        exceptionmessage.append("The plc-function-index found following problems: \n");
+        exceptionmessage.append(createErrorMessage(inserts, insert1Analyzed, faulty));
 
         List<List<String>> insert2Analyzed = plccombined.findCollisions(inserts);
-        exceptionmessage += "The plc-combined-index found following problems: \n";
-        createErrorMessage(exceptionmessage, inserts, insert2Analyzed, faulty);
+        exceptionmessage.append("The plc-combined-index found following problems: \n");
+        exceptionmessage.append(createErrorMessage(inserts, insert2Analyzed, faulty));
 
         if (faulty) {
-            throw new EDBException(exceptionmessage);
+            LOGGER.info("exception occured with content" + exceptionmessage.toString());
+            throw new EDBException(exceptionmessage.toString());
         }
     }
 
-    private void createErrorMessage(String exceptionmessage, List<EDBObject> EDBObjects,
+    private String createErrorMessage(List<EDBObject> EDBObjects,
             List<List<String>> analyzedEDBObjects, Boolean faulty) {
+        StringBuilder exceptionmessage = new StringBuilder();
         int counter = 0;
-        for (List<String> sublist : analyzedEDBObjects) {
-            if (sublist.size() > 0) {
+        for (List<String> collisionCandidates : analyzedEDBObjects) {
+            if (!collisionCandidates.isEmpty()) {
                 faulty = true;
-                exceptionmessage +=
-                    "Object " + EDBObjects.get(counter).getOID() + " collides with following existing elements: ";
-                for (String oid : sublist) {
-                    exceptionmessage += oid + " ";
+                exceptionmessage.append(
+                    "Object " + EDBObjects.get(counter).getOID() + " collides with following existing elements: ");
+                for (String oid : collisionCandidates) {
+                    exceptionmessage.append(oid + " ");
                 }
-                exceptionmessage += "\n";
+                exceptionmessage.append("\n");
             }
             counter++;
         }
+        return exceptionmessage.toString();
     }
 }
